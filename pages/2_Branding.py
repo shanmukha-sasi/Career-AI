@@ -1,4 +1,7 @@
 import streamlit as st
+import requests
+import io
+from PIL import Image
 from core.database import supabase
 from utils.engine import get_gemini_response
 from core.auth import logout_user
@@ -7,7 +10,7 @@ from core.auth import logout_user
 if not st.session_state.get("authenticated", False):
     st.switch_page("app.py")
 
-# 2. Unified Navigation Menu (Now with 5 links)
+# 2. Unified Navigation Menu
 with st.sidebar:
     st.title("Career AI Hub")
     st.page_link("pages/1_Dashboard.py", label="Dashboard", icon="🏠")
@@ -17,7 +20,6 @@ with st.sidebar:
     st.page_link("pages/5_Network.py", label="Connection Hub", icon="🤝")
     st.divider()
     st.button("Logout", on_click=logout_user, use_container_width=True)
-
 
 st.title("Profile Optimization")
 st.write("Review your current LinkedIn presence and use AI to generate high-impact improvements.")
@@ -46,7 +48,7 @@ with col1:
     current_about = st.text_area("About Section", placeholder="Paste your current about section here...", height=200)
     analyze_profile = st.button("Analyze & Optimize Profile", type="primary", use_container_width=True)
 
-# 5. Intelligence Layer
+# 5. Intelligence Layer (Text Optimization)
 if analyze_profile:
     if not current_headline or not current_about:
         st.warning("Provide both your current headline and about section for a complete analysis.")
@@ -78,8 +80,6 @@ if analyze_profile:
             
             [NEW ABOUT]
             (Write the new about section here)
-            
-             note : just 10 words in healine and 20 words in about section. Do not add any extra information or explanation. Do not self critique. Just give the rewritten headline and about section based on the critique and FAANG standards.
             """
             rewrite_response = get_gemini_response(rewrite_prompt)
             
@@ -103,3 +103,40 @@ if analyze_profile:
             st.text_area("Optimized Headline", value=new_headline, height=100)
         with opt_col2:
             st.text_area("Optimized About Section", value=new_about, height=300)
+
+# 6. Banner Studio (Un-indented so it always shows)
+st.divider()
+st.subheader("🎨 Banner Studio (Experimental)")
+st.write("Generate a professional LinkedIn background banner to match your new personal brand.")
+
+banner_col1, banner_col2 = st.columns([1, 2])
+
+with banner_col1:
+    banner_style = st.selectbox(
+        "Visual Style", 
+        ["Professional Blue Tech Modern", "Dark Mode Minimalist", "Creative Startup Vibrant", "Corporate Abstract"]
+    )
+    generate_img_btn = st.button("Generate Banner", type="secondary", use_container_width=True)
+    
+with banner_col2:
+    if generate_img_btn:
+        with st.spinner("Calling Hugging Face Diffusion API (This may take 20-40 seconds)..."):
+            # API Call to Hugging Face
+            API_URL = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
+            headers = {"Authorization": f"Bearer {st.secrets.get('HF_TOKEN_1')}"}
+            
+            # Prompt engineering for the image
+            img_prompt = f"A professional LinkedIn background banner for a {target_role}, style: {banner_style}, high resolution, clean corporate aesthetic, abstract geometric shapes, no text, no words."
+            
+            try:
+                img_response = requests.post(API_URL, headers=headers, json={"inputs": img_prompt})
+                
+                if img_response.status_code == 200:
+                    image = Image.open(io.BytesIO(img_response.content))
+                    st.image(image, caption=f"Generated: {banner_style}", use_container_width=True)
+                else:
+                    st.error(f"Image API Error: {img_response.status_code}. The model might be loading.")
+            except Exception as e:
+                st.error(f"Failed to connect to image generator: {e}")
+    else:
+        st.info("Click 'Generate Banner' to create a custom background image. Warning: High latency.")
