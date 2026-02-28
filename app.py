@@ -62,23 +62,22 @@ def show_login_page():
                     st.warning("Enter valid credentials.")
 
 def show_landing_page():
-    # 1. Top Navigation Layout (Aligned to Center)
-    nav_col1, nav_col2, nav_col3, nav_col4 = st.columns([1.5, 2.5, 1, 1], vertical_alignment="center")
+  # 1. Top Navigation Layout (Adjusted ratios for tighter buttons)
+    nav_col1, nav_col2, nav_col3, nav_col4 = st.columns([2, 4, 0.7, 0.7], vertical_alignment="center")
     
     with nav_col1:
-        # Professional SVG Logo (Inline)
+        # Replaced <h3> with <span> to eradicate all hidden Streamlit margins
         logo_svg = """
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div style="display: flex; align-items: center; gap: 10px; margin: 0; padding: 0;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M2 17L12 22L22 17" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M2 12L12 17L22 12" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <h3 style="margin: 0; padding: 0; color: #f8fafc;">Career AI</h3>
+            <span style="font-size: 1.6rem; font-weight: bold; margin: 0; padding: 0; line-height: 1; color: #f8fafc;">Career AI</span>
         </div>
         """
         st.markdown(logo_svg, unsafe_allow_html=True)
-        
     with nav_col3:
         if st.button("Features", use_container_width=True):
             st.session_state.show_about = not st.session_state.show_about

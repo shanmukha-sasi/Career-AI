@@ -2,6 +2,7 @@
 import streamlit as st
 from core.database import supabase
 from core.auth import logout_user
+from core.cache import get_cached_profile, get_cached_skills
 
 # 1. Security Check: Kick them out if they bypassed the login page
 if not st.session_state.get("authenticated", False):
