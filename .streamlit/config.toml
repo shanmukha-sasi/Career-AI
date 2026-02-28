@@ -1,14 +1,11 @@
 [theme]
-primaryColor = "#2563eb" # Professional Blue
-backgroundColor = "#f8fafc" # Light grey/white background
-secondaryBackgroundColor = "#ffffff" # White for cards/widgets
-textColor = "#0f172a" # Dark slate for readability
+base = "dark"
+primaryColor = "#3b82f6"
+backgroundColor = "#0f172a"
+secondaryBackgroundColor = "#1e293b"
+textColor = "#f8fafc"
 font = "sans serif"
-
-[server]
-enableCORS = false
-headless = true
 
 [client]
 toolbarMode = "minimal"
-showSidebarNavigation = false # We will build custom navigation
+showSidebarNavigation = false

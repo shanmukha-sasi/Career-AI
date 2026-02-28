@@ -1,0 +1,61 @@
+/* Global Background - Dark Gradient for Glassmorphism to pop */
+.stApp {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #f8fafc;
+}
+
+/* Glassmorphism Cards for st.container(border=True) */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+    padding: 1rem !important;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover effect for cards */
+div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+    transform: translateY(-5px);
+    border: 1px solid rgba(37, 99, 235, 0.5) !important;
+}
+
+/* Clean up Inputs and Buttons */
+.stTextInput>div>div>input, .stTextArea>div>div>textarea, .stSelectbox>div>div>div {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+}
+
+/* Make Text readable on dark backgrounds */
+h1, h2, h3, h4, h5, h6, p, span {
+    color: #f8fafc !important;
+}
+
+/* Primary Button Styling */
+button[kind="primary"] {
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: bold !important;
+}
+
+/* Eradicate Streamlit's default hidden header and crush padding */
+[data-testid="stHeader"] {
+    display: none !important;
+}
+
+.block-container {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    margin-top: 0 !important;
+}
+
+/* Center the Hero text perfectly */
+.hero-container {
+    margin-top: 4rem;
+    margin-bottom: 3rem;
+}

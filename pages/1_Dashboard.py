@@ -9,7 +9,7 @@ if not st.session_state.get("authenticated", False):
 
 user = st.session_state["user"]
 
-# 2. Unified Custom Sidebar Navigation
+#2  Unified Navigation Menu
 with st.sidebar:
     st.title("Career AI Hub")
     st.page_link("pages/1_Dashboard.py", label="Dashboard", icon="🏠")
@@ -17,6 +17,7 @@ with st.sidebar:
     st.page_link("pages/3_Skill_Gap.py", label="Skill Gap Analyzer", icon="📊")
     st.page_link("pages/4_Scorecard.py", label="Viral Scorecard", icon="🔥")
     st.page_link("pages/5_Network.py", label="Connection Hub", icon="🤝")
+    st.page_link("pages/6_Profile.py", label="Profile Settings", icon="⚙️")
     st.divider()
     st.button("Logout", on_click=logout_user, use_container_width=True)
 
