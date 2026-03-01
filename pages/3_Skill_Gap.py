@@ -5,12 +5,16 @@ import joblib
 from core.database import supabase
 from utils.engine import get_gemini_response
 from core.auth import logout_user
+from core.auth import logout_user
+from core.cache import force_clear_cache
+
 
 # 1. Security Check
 if not st.session_state.get("authenticated", False):
     st.switch_page("app.py")
 
-# 2. Unified Navigation Menu
+
+# 2. Unified Custom Sidebar Navigation
 with st.sidebar:
     st.title("Career AI Hub")
     st.page_link("pages/1_Dashboard.py", label="Dashboard", icon="🏠")
@@ -18,8 +22,14 @@ with st.sidebar:
     st.page_link("pages/3_Skill_Gap.py", label="Skill Gap Analyzer", icon="📊")
     st.page_link("pages/4_Scorecard.py", label="Viral Scorecard", icon="🔥")
     st.page_link("pages/5_Network.py", label="Connection Hub", icon="🤝")
-    st.page_link("pages/6_Profile.py", label="Profile Settings", icon="⚙️")
     st.divider()
+    
+    # The Manual Clear Cache Button
+    if st.button("🔄 Sync Data (Clear Cache)", use_container_width=True):
+        force_clear_cache()
+        st.success("Cache cleared. Data synced.")
+        st.rerun()
+        
     st.button("Logout", on_click=logout_user, use_container_width=True)
 
 st.title("📊 Skill Gap Analyzer")
@@ -31,16 +41,22 @@ if "current_roadmap" not in st.session_state:
 if "refinement_history" not in st.session_state:
     st.session_state.refinement_history = []
 
-# 3. Fetch Contextual User Data
+# 3. Fetch Contextual User Data from Cache
+from core.cache import get_cached_skills, get_cached_profile
+
 user_id = st.session_state["user"].id
+
 try:
-    response = supabase.table("skill_matrix").select("*").eq("id", user_id).execute()
-    prof_res = supabase.table("profiles").select("*").eq("id", user_id).execute()
-    if not response.data or not prof_res.data:
-        st.warning("Data missing. Please complete Onboarding.")
+    # Fetch BOTH skills and profile from the cache
+    skills_data = get_cached_skills(user_id)
+    profile_data = get_cached_profile(user_id)
+    
+    if not skills_data or not profile_data:
+        st.warning("Data missing. Please complete Onboarding first.")
         st.stop()
-    user_skills = response.data[0]
-    user_profile = prof_res.data[0]
+        
+    user_skills = skills_data[0]
+    user_profile = profile_data[0]
 except Exception as e:
     st.error(f"Database Error: {e}")
     st.stop()

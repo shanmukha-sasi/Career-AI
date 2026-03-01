@@ -6,6 +6,8 @@ from core.database import supabase
 from utils.engine import get_gemini_response
 from core.key_manager import key_manager
 from core.auth import logout_user
+from core.auth import logout_user
+from core.cache import force_clear_cache
 
 # 1. Security Check
 if not st.session_state.get("authenticated", False):
@@ -13,7 +15,9 @@ if not st.session_state.get("authenticated", False):
 
 user_id = st.session_state["user"].id
 
-# 2. Unified Navigation Menu
+
+
+# 2. Unified Custom Sidebar Navigation
 with st.sidebar:
     st.title("Career AI Hub")
     st.page_link("pages/1_Dashboard.py", label="Dashboard", icon="🏠")
@@ -21,8 +25,14 @@ with st.sidebar:
     st.page_link("pages/3_Skill_Gap.py", label="Skill Gap Analyzer", icon="📊")
     st.page_link("pages/4_Scorecard.py", label="Viral Scorecard", icon="🔥")
     st.page_link("pages/5_Network.py", label="Connection Hub", icon="🤝")
-    st.page_link("pages/6_Profile.py", label="Profile Settings", icon="⚙️")
     st.divider()
+    
+    # The Manual Clear Cache Button
+    if st.button("🔄 Sync Data (Clear Cache)", use_container_width=True):
+        force_clear_cache()
+        st.success("Cache cleared. Data synced.")
+        st.rerun()
+        
     st.button("Logout", on_click=logout_user, use_container_width=True)
 
 st.title("🤝 Connection Hub")
@@ -34,13 +44,15 @@ if "live_mentors" not in st.session_state:
 if "network_refinements" not in st.session_state:
     st.session_state.network_refinements = []
 
-# 3. Fetch User Context
+# 3. Fetch User Context from Cache
+from core.cache import get_cached_profile
+user_id = st.session_state["user"].id
 try:
-    response = supabase.table("profiles").select("*").eq("id", user_id).execute()
-    if not response.data:
+    profile_data = get_cached_profile(user_id)
+    if not profile_data:
         st.error("Profile data missing. Please complete Onboarding.")
         st.stop()
-    user_profile = response.data[0]
+    user_profile = profile_data[0]
     target_role = user_profile['target_role']
     target_eco = user_profile['target_ecosystem']
 except Exception as e:

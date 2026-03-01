@@ -3,6 +3,8 @@ import streamlit as st
 from core.database import supabase
 from core.auth import logout_user
 from core.cache import get_cached_profile, get_cached_skills
+from core.auth import logout_user
+from core.cache import force_clear_cache
 
 # 1. Security Check: Kick them out if they bypassed the login page
 if not st.session_state.get("authenticated", False):
@@ -10,7 +12,9 @@ if not st.session_state.get("authenticated", False):
 
 user = st.session_state["user"]
 
-#2  Unified Navigation Menu
+
+
+# 2. Unified Custom Sidebar Navigation
 with st.sidebar:
     st.title("Career AI Hub")
     st.page_link("pages/1_Dashboard.py", label="Dashboard", icon="🏠")
@@ -18,8 +22,14 @@ with st.sidebar:
     st.page_link("pages/3_Skill_Gap.py", label="Skill Gap Analyzer", icon="📊")
     st.page_link("pages/4_Scorecard.py", label="Viral Scorecard", icon="🔥")
     st.page_link("pages/5_Network.py", label="Connection Hub", icon="🤝")
-    st.page_link("pages/6_Profile.py", label="Profile Settings", icon="⚙️")
     st.divider()
+    
+    # The Manual Clear Cache Button
+    if st.button("🔄 Sync Data (Clear Cache)", use_container_width=True):
+        force_clear_cache()
+        st.success("Cache cleared. Data synced.")
+        st.rerun()
+        
     st.button("Logout", on_click=logout_user, use_container_width=True)
 
 def check_profile_exists():
@@ -97,17 +107,18 @@ def show_main_dashboard():
     st.title("Personal Branding Dashboard ")
     st.write("Optimized Career Growth Strategy & Presence. ")
     
-    # Fetch User Context dynamically [cite: 445]
+    # Fetch User Context dynamically from Cache
+    from core.cache import get_cached_profile, get_cached_skills
     try:
-        profile_res = supabase.table("profiles").select("*").eq("id", user.id).execute()
-        skills_res = supabase.table("skill_matrix").select("*").eq("id", user.id).execute()
+        prof_data_list = get_cached_profile(user.id)
+        skill_data_list = get_cached_skills(user.id)
         
-        if not profile_res.data or not skills_res.data:
+        if not prof_data_list or not skill_data_list:
             st.warning("Data sync error. Please re-run onboarding.")
             return
 
-        prof_data = profile_res.data[0]
-        skill_data = skills_res.data[0]
+        prof_data = prof_data_list[0]
+        skill_data = skill_data_list[0]
         
         target_role = prof_data['target_role']
         target_eco = prof_data['target_ecosystem']
