@@ -6,10 +6,10 @@ Career AI is an intelligent, adaptive platform designed to accelerate career gro
 Built with a focus on low-latency execution ( using **cache memory** ) and continuous feedback loops, the architecture acts as a comprehensive "Entry to Excellence," comparing user profiles against top-tier MNC (FAANG) benchmarks.
 
 ### Core Architecture & Features:
-* ** LinkedIn Identity Optimizer:** Analyzes your current professional presence against industry standards and dynamically rewrites headlines and summaries using customized voice tones. Includes a Banner Studio for generative AI background creation.
-* ** Skill Gap Analyzer:** Utilizes K-Means Clustering and interactive Radar Charts to mathematically compare a user's current technical DNA against target job requirements, generating strict, AI-driven required months closing roadmaps.
+* **LinkedIn Identity Optimizer:** Analyzes your current professional presence against industry standards and dynamically rewrites headlines and summaries using customized voice tones. Includes a Banner Studio for generative AI background creation.
+* **Skill Gap Analyzer:** Utilizes K-Means Clustering and interactive Radar Charts to mathematically compare a user's current technical DNA against target job requirements, generating strict, AI-driven required months closing roadmaps.
 * **Connection Hub (Real-Time RAG):** An autonomous agent like pipeline that generates precise search queries, scrapes live LinkedIn data via Serper.ai, and synthesizes personalized "Why Connect" outreach pitches.
-* ** Viral Scorecard:** A predictive engine evaluating the engagement probability of technical posts before publication, reinforced by a continuous database-driven user feedback loop.
+* **Viral Scorecard:** A predictive engine evaluating the engagement probability of technical posts before publication, reinforced by a continuous database-driven user feedback loop.
 
 ---
 
