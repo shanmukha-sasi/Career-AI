@@ -1,24 +1,24 @@
 #  Career AI: Personal Branding, Powered by Intelligence.
 
 ##  Project Description
-Career AI is an intelligent, adaptive platform designed to accelerate career growth for CSE students and tech professionals. Moving beyond generic advice, it leverages an advanced GenAI backend and live data retrieval to provide highly personalized, actionable strategies for personal branding, skill development, and professional networking.
+Career AI is an intelligent, adaptive platform designed to accelerate career growth for  students and tech professionals. Moving beyond generic advice, it leverages an advanced GenAI backend and live data retrieval to provide highly personalized, actionable strategies for personal branding, skill development, and professional networking.
 
-Built with a focus on low-latency execution and continuous feedback loops, the architecture acts as a comprehensive "Entry to Excellence," comparing user profiles against top-tier MNC (FAANG) benchmarks.
+Built with a focus on low-latency execution ( using **cache memory** ) and continuous feedback loops, the architecture acts as a comprehensive "Entry to Excellence," comparing user profiles against top-tier MNC (FAANG) benchmarks.
 
 ### Core Architecture & Features:
-* **✨ LinkedIn Identity Optimizer:** Analyzes your current professional presence against industry standards and dynamically rewrites headlines and summaries using customized voice tones. Includes a Banner Studio for generative AI background creation.
-* **📊 Skill Gap Analyzer:** Utilizes K-Means Clustering and interactive Radar Charts to mathematically compare a user's current technical DNA against target job requirements, generating strict, AI-driven 3-month closing roadmaps.
-* **🤝 Connection Hub (Real-Time RAG):** An autonomous agent pipeline that generates precise search queries, scrapes live LinkedIn data via Serper.ai, and synthesizes personalized "Why Connect" outreach pitches.
-* **🔥 Viral Scorecard:** A predictive engine evaluating the engagement probability of technical posts before publication, reinforced by a continuous database-driven user feedback loop.
+* ** LinkedIn Identity Optimizer:** Analyzes your current professional presence against industry standards and dynamically rewrites headlines and summaries using customized voice tones. Includes a Banner Studio for generative AI background creation.
+* ** Skill Gap Analyzer:** Utilizes K-Means Clustering and interactive Radar Charts to mathematically compare a user's current technical DNA against target job requirements, generating strict, AI-driven required months closing roadmaps.
+* **Connection Hub (Real-Time RAG):** An autonomous agent like pipeline that generates precise search queries, scrapes live LinkedIn data via Serper.ai, and synthesizes personalized "Why Connect" outreach pitches.
+* ** Viral Scorecard:** A predictive engine evaluating the engagement probability of technical posts before publication, reinforced by a continuous database-driven user feedback loop.
 
 ---
 
-## 🛠 Tech Stack
-This project implements a modern, modular Python architecture, prioritizing execution speed and seamless API integration.
+##  Tech Stack
+This project implements a modern, modular Python architecture that prioritizes execution speed and seamless API integration.
 
 * **Frontend UI:** Streamlit (Enhanced with Custom CSS Glassmorphism & State Management)
 * **Backend & Database:** Supabase (PostgreSQL for Auth, Profiles, Skill Matrix, and Feedback Logging)
-* **Large Language Model (LLM):** Google Gemini 1.5 Flash
+* **Large Language Model (LLM):** Google Gemini 2.5 Flash and Google Gemini 2.5 Flash lite  ( API keys )
 * **Retrieval-Augmented Generation (RAG):** Serper.ai API (Live Google Search scraping)
 * **Generative Image AI:** Hugging Face Inference API (Stable Diffusion XL)
 * **Machine Learning / Analytics:** Scikit-Learn (K-Means, Random Forest), Plotly (Interactive Radar Charts), Pandas.
@@ -26,7 +26,7 @@ This project implements a modern, modular Python architecture, prioritizing exec
 
 ---
 
-## ⚙️ Setup & Installation Instructions
+##  Setup & Installation Instructions
 
 Follow these instructions to run the application locally.
 
